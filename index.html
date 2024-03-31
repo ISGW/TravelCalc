@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Time Outside the US</title>
+<style>
+   h1 {
+    font-size: 26px; /* Adjust the font size as needed */
+  }
+  #tripTable tr {
+    margin-bottom: 20px; /* Adjust the value as needed */
+  }
+
+  #tripTable th {
+    padding: 1px; /* Adjust the padding as needed */
+    border: 1px solid black;
+  }
+</style>
+
+</head>
+<body>
+  <h1>Time Outside the US</h1>
+
+  <table id="tripTable">
+    <thead>
+      <tr>
+        <th style="width: 100px;">Left the US</th>
+        <th style="width: 100px;">Returned to US</th>
+        <th style="width: 100px;">Days</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Example row for the first trip -->
+      <tr>
+        <td><input type="date" class="startDate"></td>
+        <td><input type="date" class="endDate"></td>
+        <td><span class="daysDiff">0</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <button onclick="calculateTotalDays()">Calculate Total Days</button>
+  <br>
+  <br>
+  <button onclick="addRow()">Add Row</button>
+
+  <p id="totalDays"></p>
+  <p id="totalTrips"></p>
+
+  <script>
+    function addRow() {
+      const tableBody = document.querySelector('#tripTable tbody');
+      const newRow = document.createElement('tr');
+
+      newRow.innerHTML = `
+        <td><input type="date" class="startDate"></td>
+        <td><input type="date" class="endDate"></td>
+        <td><span class="daysDiff">0</span></td>
+      `;
+
+      tableBody.appendChild(newRow);
+    }
+
+    function calculateDays(startDate, endDate) {
+      const timeDiff = endDate.getTime() - startDate.getTime();
+      return Math.ceil(timeDiff / (1000 * 3600 * 24));
+    }
+
+    function calculateTotalDays() {
+      const allStartDates = document.querySelectorAll('.startDate');
+      const allEndDates = document.querySelectorAll('.endDate');
+      let totalDays = 0;
+      let totalTrips = allStartDates.length;
+
+      for (let i = 0; i < allStartDates.length; i++) {
+        const startDate = new Date(allStartDates[i].value);
+        const endDate = new Date(allEndDates[i].value);
+
+        const daysDiff = calculateDays(startDate, endDate);
+        totalDays += daysDiff;
+
+        const daysDiffElement = document.querySelectorAll('.daysDiff')[i];
+        daysDiffElement.innerText = daysDiff;
+      }
+
+      document.getElementById('totalDays').innerText = `Total Days Outside US: ${totalDays}`;
+      document.getElementById('totalTrips').innerText = `Total Trips: ${totalTrips}`;
+    }
+  </script>
+</body>
+</html>
