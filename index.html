@@ -9,7 +9,8 @@
     font-size: 26px; /* Adjust the font size as needed */
   }
   #tripTable tr {
-    margin-bottom: 20px; /* Adjust the value as needed */
+    margin-bottom: 30px; /* Adjust the value as needed */
+    font-size: 18px;
   }
 
   #tripTable th {
@@ -26,8 +27,8 @@
     <thead>
       <tr>
         <th style="width: 100px;">Left the US</th>
-        <th style="width: 100px;">Returned to US</th>
-        <th style="width: 100px;">Days</th>
+        <th style="width: 100px;">Returned to the US</th>
+        <th style="width: 60px;">Days</th>
       </tr>
     </thead>
     <tbody>
@@ -44,6 +45,7 @@
   <br>
   <br>
   <button onclick="addRow()">Add Row</button>
+  <button onclick="printContent()">Print</button>
 
   <p id="totalDays"></p>
   <p id="totalTrips"></p>
@@ -87,6 +89,16 @@
       document.getElementById('totalDays').innerText = `Total Days Outside US: ${totalDays}`;
       document.getElementById('totalTrips').innerText = `Total Trips: ${totalTrips}`;
     }
+
+    function printContent() {
+      window.print();
+    }	
+
+    // Add event listener for beforeunload event to show warning message
+    window.addEventListener('beforeunload', function(event) {
+      event.preventDefault();
+      event.returnValue = ''; // This line is required for some browsers
+    });
   </script>
 </body>
 </html>
